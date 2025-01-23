@@ -12,9 +12,8 @@ import {
   useUpdateTodoMutation,
 } from "@/redux/services/todosApi";
 
-// Define the type for drag-and-drop items
-const ItemType = {
-  TODO: "todo",
+export const ItemType = {
+  TODO: "TODO",
 };
 
 export default function TodoItem({ todo, index, moveTodo }) {
@@ -27,16 +26,19 @@ export default function TodoItem({ todo, index, moveTodo }) {
 
   const ref = useRef(null);
 
-  // React DnD hooks for drag
-  const [, drag] = useDrag({
+  const [{ isDragging }, drag] = useDrag({
     type: ItemType.TODO,
-    item: { index },
+    item: { index, id: todo.id },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
   });
 
-  // React DnD hooks for drop
   const [, drop] = useDrop({
     accept: ItemType.TODO,
-    hover: (draggedItem) => {
+    hover: (draggedItem, monitor) => {
+      if (!ref.current) return;
+
       if (draggedItem.index !== index) {
         moveTodo(draggedItem.index, index);
         draggedItem.index = index;
@@ -44,7 +46,6 @@ export default function TodoItem({ todo, index, moveTodo }) {
     },
   });
 
-  // Combine drag and drop refs
   drag(drop(ref));
 
   const handleUpdate = async () => {
@@ -65,7 +66,13 @@ export default function TodoItem({ todo, index, moveTodo }) {
   };
 
   return (
-    <div ref={ref} className='bg-card p-4 rounded-lg shadow-sm border'>
+    <div
+      ref={ref}
+      className={`
+        bg-card p-4 rounded-lg shadow-sm border 
+        ${isDragging ? "opacity-50" : "opacity-100"}
+      `}
+    >
       {isEditing ? (
         <div className='space-y-2'>
           <Input
@@ -106,11 +113,11 @@ export default function TodoItem({ todo, index, moveTodo }) {
                   todo.completed ? "line-through text-muted-foreground" : ""
                 }`}
               >
-                {title}
+                {todo.title}
               </h3>
-              {description && (
+              {todo.description && (
                 <p className='text-sm text-muted-foreground mt-1'>
-                  {description}
+                  {todo.description}
                 </p>
               )}
             </div>

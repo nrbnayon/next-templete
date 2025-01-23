@@ -171,10 +171,12 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/components/ui/input.jsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$textarea$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/components/ui/textarea.jsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$redux$2f$services$2f$todosApi$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/redux/services/todosApi.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hot$2d$toast$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react-hot-toast/dist/index.mjs [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$plus$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Plus$3e$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/plus.js [app-client] (ecmascript) <export default as Plus>");
 ;
 var _s = __turbopack_refresh__.signature();
-'use client';
+"use client";
+;
 ;
 ;
 ;
@@ -183,19 +185,29 @@ var _s = __turbopack_refresh__.signature();
 ;
 function AddTodo() {
     _s();
-    const [title, setTitle] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
-    const [description, setDescription] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
-    const [addTodo] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$redux$2f$services$2f$todosApi$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useAddTodoMutation"])();
+    const [title, setTitle] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
+    const [description, setDescription] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
+    const [addTodo, { isLoading, isError, error }] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$redux$2f$services$2f$todosApi$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useAddTodoMutation"])();
     const handleSubmit = async (e)=>{
         e.preventDefault();
-        if (!title.trim()) return;
-        await addTodo({
-            title,
-            description,
-            completed: false
-        });
-        setTitle('');
-        setDescription('');
+        if (!title.trim()) {
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hot$2d$toast$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].error("Title cannot be empty");
+            return;
+        }
+        try {
+            const result = await addTodo({
+                title,
+                description: description || undefined,
+                completed: false
+            }).unwrap();
+            // Clear form on successful submission
+            setTitle("");
+            setDescription("");
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hot$2d$toast$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].success("Todo added successfully");
+        } catch (err) {
+            console.error("Failed to add todo:", err);
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hot$2d$toast$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].error("Failed to add todo. Please try again.");
+        }
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
         onSubmit: handleSubmit,
@@ -205,48 +217,64 @@ function AddTodo() {
                 value: title,
                 onChange: (e)=>setTitle(e.target.value),
                 placeholder: "Add a new task...",
-                className: "w-full"
+                className: "w-full",
+                disabled: isLoading
             }, void 0, false, {
                 fileName: "[project]/components/AddTodo.js",
-                lineNumber: 31,
+                lineNumber: 44,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$textarea$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Textarea"], {
                 value: description,
                 onChange: (e)=>setDescription(e.target.value),
                 placeholder: "Add a description (optional)",
-                className: "w-full"
+                className: "w-full",
+                disabled: isLoading
             }, void 0, false, {
                 fileName: "[project]/components/AddTodo.js",
-                lineNumber: 37,
+                lineNumber: 51,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
                 type: "submit",
                 className: "w-full",
+                disabled: isLoading,
+                children: isLoading ? "Adding..." : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$plus$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Plus$3e$__["Plus"], {
+                            className: "h-4 w-4 mr-2"
+                        }, void 0, false, {
+                            fileName: "[project]/components/AddTodo.js",
+                            lineNumber: 63,
+                            columnNumber: 13
+                        }, this),
+                        "Add Task"
+                    ]
+                }, void 0, true)
+            }, void 0, false, {
+                fileName: "[project]/components/AddTodo.js",
+                lineNumber: 58,
+                columnNumber: 7
+            }, this),
+            isError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "text-red-500 text-sm",
                 children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$plus$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Plus$3e$__["Plus"], {
-                        className: "h-4 w-4 mr-2"
-                    }, void 0, false, {
-                        fileName: "[project]/components/AddTodo.js",
-                        lineNumber: 44,
-                        columnNumber: 9
-                    }, this),
-                    "Add Task"
+                    "Error: ",
+                    error?.message || "Something went wrong"
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/AddTodo.js",
-                lineNumber: 43,
-                columnNumber: 7
+                lineNumber: 70,
+                columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/AddTodo.js",
-        lineNumber: 30,
+        lineNumber: 43,
         columnNumber: 5
     }, this);
 }
-_s(AddTodo, "h27/ROphIFWQ7XvQ8WVYFRG3h9U=", false, function() {
+_s(AddTodo, "4wqqRWT6OVyGtX6Th+D39jYCq1o=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$redux$2f$services$2f$todosApi$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useAddTodoMutation"]
     ];
@@ -390,6 +418,7 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
 {
 __turbopack_esm__({
+    "ItemType": (()=>ItemType),
     "default": (()=>TodoItem)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
@@ -416,9 +445,8 @@ var _s = __turbopack_refresh__.signature();
 ;
 ;
 ;
-// Define the type for drag-and-drop items
 const ItemType = {
-    TODO: "todo"
+    TODO: "TODO"
 };
 function TodoItem({ todo, index, moveTodo }) {
     _s();
@@ -428,18 +456,23 @@ function TodoItem({ todo, index, moveTodo }) {
     const [updateTodo] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$redux$2f$services$2f$todosApi$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useUpdateTodoMutation"])();
     const [deleteTodo] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$redux$2f$services$2f$todosApi$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useDeleteTodoMutation"])();
     const ref = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
-    // React DnD hooks for drag
-    const [, drag] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$dnd$2f$dist$2f$hooks$2f$useDrag$2f$useDrag$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useDrag"])({
+    const [{ isDragging }, drag] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$dnd$2f$dist$2f$hooks$2f$useDrag$2f$useDrag$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useDrag"])({
         type: ItemType.TODO,
         item: {
-            index
-        }
+            index,
+            id: todo.id
+        },
+        collect: {
+            "TodoItem.useDrag": (monitor)=>({
+                    isDragging: monitor.isDragging()
+                })
+        }["TodoItem.useDrag"]
     });
-    // React DnD hooks for drop
     const [, drop] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$dnd$2f$dist$2f$hooks$2f$useDrop$2f$useDrop$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useDrop"])({
         accept: ItemType.TODO,
         hover: {
-            "TodoItem.useDrop": (draggedItem)=>{
+            "TodoItem.useDrop": (draggedItem, monitor)=>{
+                if (!ref.current) return;
                 if (draggedItem.index !== index) {
                     moveTodo(draggedItem.index, index);
                     draggedItem.index = index;
@@ -447,7 +480,6 @@ function TodoItem({ todo, index, moveTodo }) {
             }
         }["TodoItem.useDrop"]
     });
-    // Combine drag and drop refs
     drag(drop(ref));
     const handleUpdate = async ()=>{
         await updateTodo({
@@ -466,7 +498,10 @@ function TodoItem({ todo, index, moveTodo }) {
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         ref: ref,
-        className: "bg-card p-4 rounded-lg shadow-sm border",
+        className: `
+        bg-card p-4 rounded-lg shadow-sm border 
+        ${isDragging ? "opacity-50" : "opacity-100"}
+      `,
         children: isEditing ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "space-y-2",
             children: [
@@ -477,7 +512,7 @@ function TodoItem({ todo, index, moveTodo }) {
                     className: "w-full"
                 }, void 0, false, {
                     fileName: "[project]/components/TodoItem.js",
-                    lineNumber: 71,
+                    lineNumber: 78,
                     columnNumber: 11
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$textarea$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Textarea"], {
@@ -487,7 +522,7 @@ function TodoItem({ todo, index, moveTodo }) {
                     className: "w-full"
                 }, void 0, false, {
                     fileName: "[project]/components/TodoItem.js",
-                    lineNumber: 77,
+                    lineNumber: 84,
                     columnNumber: 11
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -501,12 +536,12 @@ function TodoItem({ todo, index, moveTodo }) {
                                 className: "h-4 w-4"
                             }, void 0, false, {
                                 fileName: "[project]/components/TodoItem.js",
-                                lineNumber: 89,
+                                lineNumber: 96,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/TodoItem.js",
-                            lineNumber: 84,
+                            lineNumber: 91,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -516,24 +551,24 @@ function TodoItem({ todo, index, moveTodo }) {
                                 className: "h-4 w-4"
                             }, void 0, false, {
                                 fileName: "[project]/components/TodoItem.js",
-                                lineNumber: 92,
+                                lineNumber: 99,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/TodoItem.js",
-                            lineNumber: 91,
+                            lineNumber: 98,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/TodoItem.js",
-                    lineNumber: 83,
+                    lineNumber: 90,
                     columnNumber: 11
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/components/TodoItem.js",
-            lineNumber: 70,
+            lineNumber: 77,
             columnNumber: 9
         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "flex items-start justify-between",
@@ -546,37 +581,37 @@ function TodoItem({ todo, index, moveTodo }) {
                             onCheckedChange: handleToggleComplete
                         }, void 0, false, {
                             fileName: "[project]/components/TodoItem.js",
-                            lineNumber: 99,
+                            lineNumber: 106,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
                                     className: `font-medium ${todo.completed ? "line-through text-muted-foreground" : ""}`,
-                                    children: title
+                                    children: todo.title
                                 }, void 0, false, {
                                     fileName: "[project]/components/TodoItem.js",
-                                    lineNumber: 104,
+                                    lineNumber: 111,
                                     columnNumber: 15
                                 }, this),
-                                description && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                todo.description && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                     className: "text-sm text-muted-foreground mt-1",
-                                    children: description
+                                    children: todo.description
                                 }, void 0, false, {
                                     fileName: "[project]/components/TodoItem.js",
-                                    lineNumber: 112,
+                                    lineNumber: 119,
                                     columnNumber: 17
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/TodoItem.js",
-                            lineNumber: 103,
+                            lineNumber: 110,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/TodoItem.js",
-                    lineNumber: 98,
+                    lineNumber: 105,
                     columnNumber: 11
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -590,12 +625,12 @@ function TodoItem({ todo, index, moveTodo }) {
                                 className: "h-4 w-4"
                             }, void 0, false, {
                                 fileName: "[project]/components/TodoItem.js",
-                                lineNumber: 124,
+                                lineNumber: 131,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/TodoItem.js",
-                            lineNumber: 119,
+                            lineNumber: 126,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$jsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -606,33 +641,33 @@ function TodoItem({ todo, index, moveTodo }) {
                                 className: "h-4 w-4"
                             }, void 0, false, {
                                 fileName: "[project]/components/TodoItem.js",
-                                lineNumber: 131,
+                                lineNumber: 138,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/TodoItem.js",
-                            lineNumber: 126,
+                            lineNumber: 133,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/TodoItem.js",
-                    lineNumber: 118,
+                    lineNumber: 125,
                     columnNumber: 11
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/components/TodoItem.js",
-            lineNumber: 97,
+            lineNumber: 104,
             columnNumber: 9
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/TodoItem.js",
-        lineNumber: 68,
+        lineNumber: 69,
         columnNumber: 5
     }, this);
 }
-_s(TodoItem, "9ayod5M9s3+tPWTCWnZjLjEUfyw=", false, function() {
+_s(TodoItem, "OfvZYWizkoHAb7R7eflvp0zFzUM=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$redux$2f$services$2f$todosApi$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useUpdateTodoMutation"],
         __TURBOPACK__imported__module__$5b$project$5d2f$redux$2f$services$2f$todosApi$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useDeleteTodoMutation"],
@@ -656,16 +691,14 @@ __turbopack_esm__({
     "default": (()=>TodoList)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$TodoItem$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/components/TodoItem.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$redux$2f$services$2f$todosApi$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/redux/services/todosApi.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$dnd$2f$dist$2f$hooks$2f$useDrag$2f$useDrag$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react-dnd/dist/hooks/useDrag/useDrag.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$dnd$2f$dist$2f$hooks$2f$useDrop$2f$useDrop$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react-dnd/dist/hooks/useDrop/useDrop.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$redux$2f$services$2f$todosApi$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/redux/services/todosApi.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$TodoItem$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/components/TodoItem.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$immutability$2d$helper$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/immutability-helper/index.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react-redux/dist/react-redux.mjs [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$dnd$2f$dist$2f$core$2f$DndProvider$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react-dnd/dist/core/DndProvider.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$dnd$2d$html5$2d$backend$2f$dist$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_import__("[project]/node_modules/react-dnd-html5-backend/dist/index.js [app-client] (ecmascript) <locals>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$dnd$2f$dist$2f$hooks$2f$useDrop$2f$useDrop$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react-dnd/dist/hooks/useDrop/useDrop.js [app-client] (ecmascript)");
 ;
-var _s = __turbopack_refresh__.signature(), _s1 = __turbopack_refresh__.signature();
+var _s = __turbopack_refresh__.signature();
 "use client";
 ;
 ;
@@ -673,17 +706,36 @@ var _s = __turbopack_refresh__.signature(), _s1 = __turbopack_refresh__.signatur
 ;
 ;
 ;
-// Constants for drag types
-const ItemTypes = {
-    TODO: "TODO"
-};
 function TodoList() {
     _s();
     const { data: todos = [], isLoading, error } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$redux$2f$services$2f$todosApi$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useGetTodosQuery"])();
     const filter = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSelector"])({
         "TodoList.useSelector[filter]": (state)=>state.todos.filter
     }["TodoList.useSelector[filter]"]);
-    const [localTodos, setLocalTodos] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(todos);
+    const [todoList, setTodoList] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(todos);
+    const [, drop] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$dnd$2f$dist$2f$hooks$2f$useDrop$2f$useDrop$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useDrop"])({
+        accept: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$TodoItem$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ItemType"].TODO
+    });
+    const moveTodo = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "TodoList.useCallback[moveTodo]": (dragIndex, hoverIndex)=>{
+            const draggedTodo = todoList[dragIndex];
+            setTodoList((0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$immutability$2d$helper$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"])(todoList, {
+                $splice: [
+                    [
+                        dragIndex,
+                        1
+                    ],
+                    [
+                        hoverIndex,
+                        0,
+                        draggedTodo
+                    ]
+                ]
+            }));
+        }
+    }["TodoList.useCallback[moveTodo]"], [
+        todoList
+    ]);
     if (isLoading) {
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "flex justify-center items-center h-64",
@@ -691,12 +743,12 @@ function TodoList() {
                 className: "animate-spin rounded-full h-12 w-12 border-b-2 border-primary"
             }, void 0, false, {
                 fileName: "[project]/components/TodoList.js",
-                lineNumber: 23,
+                lineNumber: 37,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/components/TodoList.js",
-            lineNumber: 22,
+            lineNumber: 36,
             columnNumber: 7
         }, this);
     }
@@ -709,104 +761,43 @@ function TodoList() {
             ]
         }, void 0, true, {
             fileName: "[project]/components/TodoList.js",
-            lineNumber: 30,
+            lineNumber: 44,
             columnNumber: 7
         }, this);
     }
-    const filteredTodos = localTodos.filter((todo)=>{
+    const filteredTodos = todoList.filter((todo)=>{
         if (filter === "completed") return todo.completed;
         if (filter === "incomplete") return !todo.completed;
         return true;
     });
-    // Handle drag and drop logic
-    const moveTodo = (dragIndex, hoverIndex)=>{
-        const updatedTodos = [
-            ...localTodos
-        ];
-        const [removed] = updatedTodos.splice(dragIndex, 1);
-        updatedTodos.splice(hoverIndex, 0, removed);
-        setLocalTodos(updatedTodos);
-    };
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$dnd$2f$dist$2f$core$2f$DndProvider$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DndProvider"], {
-        backend: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$dnd$2d$html5$2d$backend$2f$dist$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["HTML5Backend"],
-        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "space-y-4",
-            children: filteredTodos.map((todo, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(DraggableTodo, {
-                    todo: todo,
-                    index: index,
-                    moveTodo: moveTodo
-                }, todo.id, false, {
-                    fileName: "[project]/components/TodoList.js",
-                    lineNumber: 54,
-                    columnNumber: 11
-                }, this))
-        }, void 0, false, {
-            fileName: "[project]/components/TodoList.js",
-            lineNumber: 52,
-            columnNumber: 7
-        }, this)
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        ref: drop,
+        className: "space-y-4",
+        children: filteredTodos.map((todo, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$TodoItem$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                todo: todo,
+                index: index,
+                moveTodo: moveTodo
+            }, todo.id, false, {
+                fileName: "[project]/components/TodoList.js",
+                lineNumber: 59,
+                columnNumber: 9
+            }, this))
     }, void 0, false, {
         fileName: "[project]/components/TodoList.js",
-        lineNumber: 51,
+        lineNumber: 57,
         columnNumber: 5
     }, this);
 }
-_s(TodoList, "Rujxj80KjbrzBD8/dI5MltsqEvM=", false, function() {
+_s(TodoList, "YUqNZY7Ma8megtMmkBZ9BZHP578=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$redux$2f$services$2f$todosApi$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useGetTodosQuery"],
-        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSelector"]
-    ];
-});
-_c = TodoList;
-function DraggableTodo({ todo, index, moveTodo }) {
-    _s1();
-    const ref = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
-    // Drag logic
-    const [, drag] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$dnd$2f$dist$2f$hooks$2f$useDrag$2f$useDrag$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useDrag"])({
-        type: ItemTypes.TODO,
-        item: {
-            index
-        }
-    });
-    // Drop logic
-    const [, drop] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$dnd$2f$dist$2f$hooks$2f$useDrop$2f$useDrop$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useDrop"])({
-        accept: ItemTypes.TODO,
-        hover: {
-            "DraggableTodo.useDrop": (item)=>{
-                if (item.index !== index) {
-                    moveTodo(item.index, index);
-                    item.index = index;
-                }
-            }
-        }["DraggableTodo.useDrop"]
-    });
-    drag(drop(ref));
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        ref: ref,
-        className: "p-4 border rounded shadow-md bg-white",
-        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$TodoItem$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-            todo: todo
-        }, void 0, false, {
-            fileName: "[project]/components/TodoList.js",
-            lineNumber: 90,
-            columnNumber: 7
-        }, this)
-    }, void 0, false, {
-        fileName: "[project]/components/TodoList.js",
-        lineNumber: 89,
-        columnNumber: 5
-    }, this);
-}
-_s1(DraggableTodo, "n6lNSBfgdZ7TM2mYMz8Gr5XaBlc=", false, function() {
-    return [
-        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$dnd$2f$dist$2f$hooks$2f$useDrag$2f$useDrag$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useDrag"],
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSelector"],
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$dnd$2f$dist$2f$hooks$2f$useDrop$2f$useDrop$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useDrop"]
     ];
 });
-_c1 = DraggableTodo;
-var _c, _c1;
+_c = TodoList;
+var _c;
 __turbopack_refresh__.register(_c, "TodoList");
-__turbopack_refresh__.register(_c1, "DraggableTodo");
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
 }

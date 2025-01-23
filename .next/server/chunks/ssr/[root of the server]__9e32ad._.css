@@ -674,10 +674,6 @@ img, video {
   white-space: nowrap;
 }
 
-.rounded {
-  border-radius: .25rem;
-}
-
 .rounded-full {
   border-radius: 9999px;
 }
@@ -914,6 +910,14 @@ img, video {
 .antialiased {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.opacity-100 {
+  opacity: 1;
+}
+
+.opacity-50 {
+  opacity: .5;
 }
 
 .opacity-60 {

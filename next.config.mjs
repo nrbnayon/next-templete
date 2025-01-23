@@ -8,6 +8,14 @@ const nextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*",
+        destination: "http://192.168.10.56:3000/:path*",
+      },
+    ];
+  },
   experimental: {
     turbo: {
       rules: {
